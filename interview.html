@@ -1,0 +1,1651 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>21-Day Full-Stack / Frontend Interview Sprint Tracker</title>
+    <style>
+      :root {
+        --bg: #0f172a;
+        --surface: #1e293b;
+        --surface-hover: #26354d;
+        --border: #334155;
+        --text: #f8fafc;
+        --text-muted: #94a3b8;
+        --accent: #38bdf8;
+        --accent-dark: #0284c7;
+        --dsa: #818cf8;
+        --gfe: #34d399;
+        --sys: #fbbf24;
+        --rev: #f472b6;
+        --danger: #f87171;
+        --success: #22c55e;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Inter, sans-serif;
+        background-color: var(--bg);
+        color: var(--text);
+        line-height: 1.5;
+        padding-bottom: 60px;
+      }
+
+      header {
+        background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+        border-bottom: 1px solid var(--border);
+        padding: 20px 24px;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(8px);
+      }
+
+      .header-container {
+        max-width: 1320px;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .title-area h1 {
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .stack-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 6px;
+      }
+
+      .pill {
+        font-size: 0.72rem;
+        font-weight: 600;
+        padding: 2px 8px;
+        border-radius: 999px;
+        background: rgba(56, 189, 248, 0.12);
+        color: var(--accent);
+        border: 1px solid rgba(56, 189, 248, 0.25);
+        text-decoration: none;
+      }
+
+      .pill:hover {
+        background: rgba(56, 189, 248, 0.25);
+      }
+
+      .timer-widget {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--bg);
+        padding: 8px 14px;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+      }
+
+      .timer-display {
+        font-family: 'SF Mono', 'Fira Code', monospace;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--accent);
+        min-width: 68px;
+        text-align: center;
+      }
+
+      .btn {
+        background: var(--surface);
+        color: var(--text);
+        border: 1px solid var(--border);
+        padding: 6px 11px;
+        border-radius: 6px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.15s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .btn:hover {
+        background: var(--surface-hover);
+        border-color: var(--accent);
+      }
+
+      .btn-primary {
+        background: var(--accent-dark);
+        border-color: var(--accent);
+        color: #fff;
+      }
+
+      .stats-bar {
+        max-width: 1320px;
+        margin: 14px auto 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 12px;
+      }
+
+      .stat-card {
+        background: rgba(30, 41, 59, 0.7);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 10px 14px;
+      }
+
+      .stat-card-header {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        margin-bottom: 6px;
+        font-weight: 600;
+      }
+
+      .progress-track {
+        width: 100%;
+        height: 8px;
+        background: var(--bg);
+        border-radius: 999px;
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        height: 100%;
+        width: 0%;
+        transition: width 0.3s ease;
+        border-radius: 999px;
+      }
+
+      main {
+        max-width: 1320px;
+        margin: 24px auto;
+        padding: 0 24px;
+      }
+
+      .controls-row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 20px;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 14px;
+      }
+
+      .tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .tab-btn {
+        background: var(--surface);
+        color: var(--text-muted);
+        border: 1px solid var(--border);
+        padding: 10px 18px;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.15s ease;
+      }
+
+      .tab-btn:hover {
+        color: var(--text);
+        background: var(--surface-hover);
+      }
+
+      .tab-btn.active {
+        background: var(--accent-dark);
+        color: #fff;
+        border-color: var(--accent);
+        box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
+      }
+
+      .filter-group {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      select,
+      input[type='search'] {
+        background: var(--surface);
+        color: var(--text);
+        border: 1px solid var(--border);
+        padding: 7px 12px;
+        border-radius: 6px;
+        font-size: 0.82rem;
+      }
+
+      .days-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .day-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        transition: border-color 0.2s;
+      }
+
+      .day-card.day-complete {
+        border-color: rgba(34, 197, 94, 0.5);
+      }
+
+      .day-header {
+        background: rgba(15, 23, 42, 0.55);
+        padding: 14px 20px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        cursor: pointer;
+      }
+
+      .day-title-wrap {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .day-badge {
+        background: var(--accent-dark);
+        color: #fff;
+        font-weight: 700;
+        font-size: 0.8rem;
+        padding: 4px 10px;
+        border-radius: 6px;
+      }
+
+      .day-title {
+        font-size: 1.05rem;
+        font-weight: 700;
+      }
+
+      .day-meta {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 0.82rem;
+        color: var(--text-muted);
+      }
+
+      .day-body {
+        padding: 18px 20px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 16px;
+      }
+
+      .day-body.collapsed {
+        display: none;
+      }
+
+      .block-col {
+        background: rgba(15, 23, 42, 0.4);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 12px 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .block-header {
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 6px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .block-dsa {
+        color: var(--dsa);
+      }
+      .block-gfe {
+        color: var(--gfe);
+      }
+      .block-sys {
+        color: var(--sys);
+      }
+
+      .task-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .task-item {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 7px 9px;
+        border-radius: 6px;
+        background: rgba(30, 41, 59, 0.5);
+        border: 1px solid transparent;
+        transition: all 0.15s;
+      }
+
+      .task-item:hover {
+        border-color: var(--border);
+        background: rgba(30, 41, 59, 0.9);
+      }
+
+      .task-item.completed .task-text {
+        text-decoration: line-through;
+        color: var(--text-muted);
+      }
+
+      .task-item.flagged {
+        border-color: rgba(248, 113, 113, 0.5);
+        background: rgba(248, 113, 113, 0.08);
+      }
+
+      .task-left {
+        display: flex;
+        align-items: flex-start;
+        gap: 9px;
+        flex: 1;
+      }
+
+      .task-left input[type='checkbox'] {
+        margin-top: 4px;
+        width: 16px;
+        height: 16px;
+        accent-color: var(--success);
+        cursor: pointer;
+        flex-shrink: 0;
+      }
+
+      .task-content {
+        font-size: 0.86rem;
+        color: var(--text);
+        word-break: break-word;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        flex: 1;
+      }
+
+      .task-title-row {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .task-text {
+        cursor: pointer;
+      }
+
+      .tag-chip {
+        display: inline-block;
+        font-size: 0.68rem;
+        padding: 1px 6px;
+        border-radius: 4px;
+        background: rgba(148, 163, 184, 0.15);
+        color: var(--text-muted);
+        font-weight: 600;
+      }
+
+      .task-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 2px;
+      }
+
+      .problem-link {
+        font-size: 0.72rem;
+        font-weight: 600;
+        padding: 2px 7px;
+        border-radius: 4px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+        transition: all 0.15s ease;
+      }
+
+      .link-nc {
+        background: rgba(129, 140, 248, 0.14);
+        color: #a5b4fc;
+        border: 1px solid rgba(129, 140, 248, 0.3);
+      }
+      .link-nc:hover {
+        background: rgba(129, 140, 248, 0.28);
+        color: #fff;
+      }
+
+      .link-lc {
+        background: rgba(251, 191, 36, 0.12);
+        color: #fcd34d;
+        border: 1px solid rgba(251, 191, 36, 0.3);
+      }
+      .link-lc:hover {
+        background: rgba(251, 191, 36, 0.25);
+        color: #fff;
+      }
+
+      .link-gfe {
+        background: rgba(52, 211, 153, 0.14);
+        color: #6ee7b7;
+        border: 1px solid rgba(52, 211, 153, 0.3);
+      }
+      .link-gfe:hover {
+        background: rgba(52, 211, 153, 0.28);
+        color: #fff;
+      }
+
+      .link-sys {
+        background: rgba(56, 189, 248, 0.14);
+        color: #7dd3fc;
+        border: 1px solid rgba(56, 189, 248, 0.3);
+      }
+      .link-sys:hover {
+        background: rgba(56, 189, 248, 0.28);
+        color: #fff;
+      }
+
+      .flag-btn {
+        background: transparent;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+        font-size: 0.85rem;
+        padding: 2px 5px;
+        border-radius: 4px;
+        opacity: 0.6;
+        transition: all 0.15s;
+      }
+
+      .flag-btn:hover,
+      .task-item.flagged .flag-btn {
+        opacity: 1;
+        color: var(--danger);
+      }
+
+      .day-notes {
+        grid-column: 1 / -1;
+        background: rgba(15, 23, 42, 0.4);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 10px 14px;
+      }
+
+      .day-notes label {
+        display: block;
+        font-size: 0.76rem;
+        font-weight: 700;
+        color: var(--rev);
+        text-transform: uppercase;
+        margin-bottom: 6px;
+      }
+
+      .day-notes textarea,
+      .star-textarea {
+        width: 100%;
+        background: var(--bg);
+        color: var(--text);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 8px 10px;
+        font-family: inherit;
+        font-size: 0.84rem;
+        resize: vertical;
+        min-height: 54px;
+      }
+
+      .star-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+        gap: 18px;
+      }
+
+      .star-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .star-card h3 {
+        font-size: 1rem;
+        color: var(--accent);
+      }
+
+      .star-card p {
+        font-size: 0.84rem;
+        color: var(--text-muted);
+      }
+
+      .hidden {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="header-container">
+        <div class="title-area">
+          <h1>⚡ 21-Day Full-Stack & Frontend Interview Sprint</h1>
+          <div class="stack-pills">
+            <a class="pill" href="https://neetcode.io/roadmap" target="_blank" rel="noopener">NeetCode Roadmap ↗</a>
+            <a class="pill" href="https://www.greatfrontend.com/interviews/gfe75" target="_blank" rel="noopener">GFE 75 Hub ↗</a>
+            <a class="pill" href="https://www.greatfrontend.com/front-end-system-design-playbook" target="_blank" rel="noopener">RADIO Playbook ↗</a>
+            <a class="pill" href="https://www.hellointerview.com/learn/system-design/in-a-hurry/introduction" target="_blank" rel="noopener">Hello Interview ↗</a>
+            <span class="pill">TypeScript / Vue.js / Python / AWS</span>
+          </div>
+        </div>
+
+        <div class="timer-widget">
+          <span class="timer-display" id="timerDisplay">25:00</span>
+          <button class="btn btn-primary" id="timerStartBtn" onclick="toggleTimer()">Start</button>
+          <button class="btn" onclick="setTimer(25)">25m DSA</button>
+          <button class="btn" onclick="setTimer(45)">45m Mock</button>
+          <button class="btn" onclick="resetTimer()">Reset</button>
+        </div>
+      </div>
+
+      <div class="stats-bar">
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <span>Overall Sprint Progress</span>
+            <span id="overallStatText">0 / 0 (0%)</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="overallProgress" style="background: var(--accent)"></div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <span style="color: var(--dsa)">Morning: NeetCode DSA</span>
+            <span id="dsaStatText">0 / 0</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="dsaProgress" style="background: var(--dsa)"></div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <span style="color: var(--gfe)">Afternoon: GFE 75 (TS/Vue)</span>
+            <span id="gfeStatText">0 / 0</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="gfeProgress" style="background: var(--gfe)"></div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <span style="color: var(--sys)">System Design & Mocks</span>
+            <span id="sysStatText">0 / 0</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="sysProgress" style="background: var(--sys)"></div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="controls-row">
+        <div class="tabs">
+          <button class="tab-btn active" onclick="switchTab('week1', this)">Week 1 (Days 1–7)</button>
+          <button class="tab-btn" onclick="switchTab('week2', this)">Week 2 (Days 8–14)</button>
+          <button class="tab-btn" onclick="switchTab('week3', this)">Week 3 (Days 15–21)</button>
+          <button class="tab-btn" onclick="switchTab('star', this)">★ Resume STAR Stories & Cheat Sheet</button>
+        </div>
+
+        <div class="filter-group">
+          <input type="search" id="searchInput" placeholder="Search problem or topic..." oninput="renderDays()" />
+          <select id="statusFilter" onchange="renderDays()">
+            <option value="all">Show: All Tasks</option>
+            <option value="todo">Show: Incomplete Only</option>
+            <option value="done">Show: Completed Only</option>
+            <option value="flagged">Show: 🚩 Flagged for Redo</option>
+          </select>
+          <button class="btn btn-primary" onclick="downloadSelfHtml()">⬇ Download .html</button>
+          <button class="btn" onclick="exportProgress()">Export JSON</button>
+          <button class="btn" onclick="document.getElementById('importFile').click()">Import JSON</button>
+          <input type="file" id="importFile" style="display: none" accept=".json" onchange="importProgress(event)" />
+        </div>
+      </div>
+
+      <div id="daysContainer" class="days-grid"></div>
+      <div id="starContainer" class="star-grid hidden"></div>
+    </main>
+
+    <script>
+      // URL Helper Builders
+      const nc = (slug, label = 'NeetCode') => ({ label, url: `https://neetcode.io/problems/${slug}`, type: 'nc' })
+      const lc = (slug, label = 'LeetCode') => ({ label, url: `https://leetcode.com/problems/${slug}/`, type: 'lc' })
+      const gfe = (slug, label = 'GFE Problem') => ({ label, url: `https://www.greatfrontend.com/questions/${slug}`, type: 'gfe' })
+      const gfeSys = (slug, label = 'GFE System Design') => ({ label, url: `https://www.greatfrontend.com/questions/system-design/${slug}`, type: 'sys' })
+      const hi = (slug, label = 'Hello Interview') => ({ label, url: `https://www.hellointerview.com/learn/system-design/${slug}`, type: 'sys' })
+
+      // Complete 21-Day Curriculum with Direct URLs
+      const SPRINT_DATA = [
+        // ================= WEEK 1 =================
+        {
+          day: 1,
+          week: 'week1',
+          title: 'Arrays & Hashing I + Core JS Timing Utilities + RADIO Intro',
+          dsa: [
+            { id: 'd1_dsa1', text: 'Contains Duplicate', tag: 'Easy', links: [nc('duplicate-integer'), lc('contains-duplicate')] },
+            { id: 'd1_dsa2', text: 'Valid Anagram', tag: 'Easy', links: [nc('is-anagram'), lc('valid-anagram')] },
+            { id: 'd1_dsa3', text: 'Two Sum', tag: 'Easy', links: [nc('two-integer-sum'), lc('two-sum')] },
+            { id: 'd1_dsa4', text: 'Group Anagrams', tag: 'Medium', links: [nc('anagram-groups'), lc('group-anagrams')] },
+            { id: 'd1_dsa5', text: 'Top K Frequent Elements (Bucket Sort or Heap)', tag: 'Medium', links: [nc('top-k-elements-in-list'), lc('top-k-frequent-elements')] },
+          ],
+          gfe: [
+            {
+              id: 'd1_gfe1',
+              text: 'Debounce (Basic + Debounce II with cancel/flush)',
+              tag: 'TS Utility',
+              links: [gfe('javascript/debounce', 'Debounce I'), gfe('javascript/debounce-ii', 'Debounce II')],
+            },
+            { id: 'd1_gfe2', text: 'Throttle (Leading & Trailing options)', tag: 'TS Utility', links: [gfe('javascript/throttle', 'Throttle')] },
+            { id: 'd1_gfe3', text: 'Array.prototype.reduce Polyfill', tag: 'JS Mechanics', links: [gfe('javascript/array-reduce', 'Array.reduce')] },
+          ],
+          sys: [
+            {
+              id: 'd1_sys1',
+              text: 'Read GreatFrontEnd RADIO System Design Playbook',
+              tag: 'Framework',
+              links: [{ label: 'RADIO Playbook', url: 'https://www.greatfrontend.com/front-end-system-design-playbook', type: 'sys' }],
+            },
+            { id: 'd1_sys2', text: 'Design Autocomplete UI (Debouncing, normalized cache, ARIA)', tag: 'GFE Design', links: [gfeSys('autocomplete', 'Autocomplete Guide')] },
+            { id: 'd1_sys3', text: 'End-of-Day: Log pattern triggers for Day 1', tag: 'Review', links: [] },
+          ],
+        },
+        {
+          day: 2,
+          week: 'week1',
+          title: 'Arrays II & Two Pointers + Recursive Array/Class Utilities',
+          dsa: [
+            { id: 'd2_dsa1', text: 'Product of Array Except Self (Prefix/Suffix)', tag: 'Medium', links: [nc('products-of-array-discluding-self'), lc('product-of-array-except-self')] },
+            { id: 'd2_dsa2', text: 'Encode and Decode Strings', tag: 'Medium', links: [nc('string-encode-and-decode'), lc('encode-and-decode-strings')] },
+            { id: 'd2_dsa3', text: 'Longest Consecutive Sequence (Set lookup)', tag: 'Medium', links: [nc('longest-consecutive-sequence'), lc('longest-consecutive-sequence')] },
+            { id: 'd2_dsa4', text: 'Valid Palindrome & Two Sum II (Sorted)', tag: 'Easy/Med', links: [nc('is-palindrome', 'Valid Palindrome'), nc('two-integer-sum-ii', 'Two Sum II')] },
+            { id: 'd2_dsa5', text: '3Sum (Sort + Two Pointers + Dedup)', tag: 'Medium', links: [nc('three-integer-sum'), lc('3sum')] },
+          ],
+          gfe: [
+            { id: 'd2_gfe1', text: 'Classnames (Conditional CSS class joiner)', tag: 'TS Utility', links: [gfe('javascript/classnames', 'Classnames')] },
+            { id: 'd2_gfe2', text: 'Flatten (Recursive & Iterative array flattening)', tag: 'TS Utility', links: [gfe('javascript/flatten', 'Flatten')] },
+            { id: 'd2_gfe3', text: 'Array.prototype.filter & map Polyfills', tag: 'JS Mechanics', links: [gfe('javascript/array-filter', 'Array.filter'), gfe('javascript/array-map', 'Array.map')] },
+          ],
+          sys: [
+            {
+              id: 'd2_sys1',
+              text: 'Design Dropdown Menu & Modal Dialog Component Architecture',
+              tag: 'GFE Design',
+              links: [gfeSys('dropdown-menu', 'Dropdown Menu'), gfeSys('modal-dialog', 'Modal Dialog')],
+            },
+            { id: 'd2_sys2', text: 'Whiteboard Portal rendering, z-index stacking & focus trapping', tag: 'UI Deep Dive', links: [] },
+            { id: 'd2_sys3', text: 'End-of-Day: Re-solve 1 missed problem from Day 1', tag: 'Spaced Rep', links: [] },
+          ],
+        },
+        {
+          day: 3,
+          week: 'week1',
+          title: 'Sliding Window I + Deep Object Cloning + News Feed BFF Design',
+          dsa: [
+            { id: 'd3_dsa1', text: 'Container With Most Water', tag: 'Medium', links: [nc('max-water-container'), lc('container-with-most-water')] },
+            { id: 'd3_dsa2', text: 'Best Time to Buy and Sell Stock', tag: 'Easy', links: [nc('buy-and-sell-crypto'), lc('best-time-to-buy-and-sell-stock')] },
+            {
+              id: 'd3_dsa3',
+              text: 'Longest Substring Without Repeating Characters',
+              tag: 'Medium',
+              links: [nc('longest-substring-without-duplicates'), lc('longest-substring-without-repeating-characters')],
+            },
+            {
+              id: 'd3_dsa4',
+              text: 'Longest Repeating Character Replacement',
+              tag: 'Medium',
+              links: [nc('longest-repeating-substring-with-replacement'), lc('longest-repeating-character-replacement')],
+            },
+          ],
+          gfe: [
+            {
+              id: 'd3_gfe1',
+              text: 'Deep Clone (Handle objects, arrays, dates & circular refs)',
+              tag: 'TS Utility',
+              links: [gfe('javascript/deep-clone', 'Deep Clone'), gfe('javascript/deep-clone-ii', 'Deep Clone II')],
+            },
+            { id: 'd3_gfe2', text: 'Type Utilities II (isPlainObject, isArray, isCloneable)', tag: 'TS Utility', links: [gfe('javascript/type-utilities-ii', 'Type Utilities II')] },
+            {
+              id: 'd3_gfe3',
+              text: 'Function.prototype.call / bind / apply',
+              tag: 'JS Mechanics',
+              links: [gfe('javascript/function-bind', 'Function.bind'), gfe('javascript/function-call', 'Function.call')],
+            },
+          ],
+          sys: [
+            { id: 'd3_sys1', text: 'Design News Feed (Facebook/X) using RADIO framework', tag: 'GFE Design', links: [gfeSys('news-feed-facebook', 'News Feed Guide')] },
+            { id: 'd3_sys2', text: 'Map cursor pagination, optimistic likes & BFF aggregation layer', tag: 'BFF Tie-In', links: [] },
+            { id: 'd3_sys3', text: 'End-of-Day: Re-implement Deep Clone without looking at notes', tag: 'Spaced Rep', links: [gfe('javascript/deep-clone', 'Deep Clone')] },
+          ],
+        },
+        {
+          day: 4,
+          week: 'week1',
+          title: 'Sliding Window II & Monotonic Stack + Functional Currying',
+          dsa: [
+            { id: 'd4_dsa1', text: 'Permutation in String (Fixed Window Frequency)', tag: 'Medium', links: [nc('permutation-string'), lc('permutation-in-string')] },
+            { id: 'd4_dsa2', text: 'Minimum Window Substring', tag: 'Hard', links: [nc('minimum-window-with-characters'), lc('minimum-window-substring')] },
+            { id: 'd4_dsa3', text: 'Valid Parentheses', tag: 'Easy', links: [nc('validate-parentheses'), lc('valid-parentheses')] },
+            { id: 'd4_dsa4', text: 'Min Stack (O(1) min tracking)', tag: 'Medium', links: [nc('minimum-stack'), lc('min-stack')] },
+            { id: 'd4_dsa5', text: 'Daily Temperatures (Monotonic Decreasing Stack)', tag: 'Medium', links: [nc('daily-temperatures'), lc('daily-temperatures')] },
+          ],
+          gfe: [
+            { id: 'd4_gfe1', text: 'Data Merging (Aggregate rows by user ID)', tag: 'TS Utility', links: [gfe('javascript/data-merging', 'Data Merging')] },
+            { id: 'd4_gfe2', text: 'Curry & Curry II', tag: 'Functional TS', links: [gfe('javascript/curry', 'Curry I'), gfe('javascript/curry-ii', 'Curry II')] },
+            { id: 'd4_gfe3', text: 'Memoize (Single & multi-argument caching)', tag: 'TS Utility', links: [gfe('javascript/memoize', 'Memoize I'), gfe('javascript/memoize-ii', 'Memoize II')] },
+          ],
+          sys: [
+            { id: 'd4_sys1', text: 'Design Infinite Scroll & Image Carousel', tag: 'GFE Design', links: [gfeSys('image-carousel', 'Image Carousel')] },
+            { id: 'd4_sys2', text: 'Review AWS CloudFront / S3 image optimization & lazy loading', tag: 'AWS Tie-In', links: [] },
+            { id: 'd4_sys3', text: 'End-of-Day: Re-solve 1 Sliding Window Medium under 20m', tag: 'Spaced Rep', links: [] },
+          ],
+        },
+        {
+          day: 5,
+          week: 'week1',
+          title: 'Stack II & Binary Search I + Promise Combinators + Data Table Design',
+          dsa: [
+            { id: 'd5_dsa1', text: 'Evaluate Reverse Polish Notation', tag: 'Medium', links: [nc('evaluate-reverse-polish-notation'), lc('evaluate-reverse-polish-notation')] },
+            { id: 'd5_dsa2', text: 'Car Fleet', tag: 'Medium', links: [nc('car-fleet'), lc('car-fleet')] },
+            { id: 'd5_dsa3', text: 'Binary Search & Search a 2D Matrix', tag: 'Easy/Med', links: [nc('binary-search', 'Binary Search'), nc('search-2d-matrix', 'Search 2D Matrix')] },
+            { id: 'd5_dsa4', text: 'Koko Eating Bananas (Binary Search on Answer Space)', tag: 'Medium', links: [nc('eating-bananas'), lc('koko-eating-bananas')] },
+          ],
+          gfe: [
+            { id: 'd5_gfe1', text: 'Promise.all Polyfill', tag: 'Async TS', links: [gfe('javascript/promise-all', 'Promise.all')] },
+            {
+              id: 'd5_gfe2',
+              text: 'Promise.any & Promise.allSettled Polyfills',
+              tag: 'Async TS',
+              links: [gfe('javascript/promise-any', 'Promise.any'), gfe('javascript/promise-all-settled', 'Promise.allSettled')],
+            },
+            { id: 'd5_gfe3', text: 'Promise.race & Sleep utility', tag: 'Async TS', links: [gfe('javascript/promise-race', 'Promise.race'), gfe('javascript/sleep', 'Sleep')] },
+          ],
+          sys: [
+            { id: 'd5_sys1', text: 'Design Enterprise Data Table (Sorting, Filtering, Server Pagination)', tag: 'GFE Design', links: [gfe('user-interface/data-table', 'Data Table Guide')] },
+            { id: 'd5_sys2', text: 'Connect design to dynamic UI rendering (`ViewOffers` pattern)', tag: 'Resume Tie-In', links: [] },
+            { id: 'd5_sys3', text: 'End-of-Day: Write Promise.all from scratch in 5 mins', tag: 'Spaced Rep', links: [gfe('javascript/promise-all', 'Promise.all')] },
+          ],
+        },
+        {
+          day: 6,
+          week: 'week1',
+          title: 'Binary Search II & Linked Lists I + Async Concurrency Queues',
+          dsa: [
+            { id: 'd6_dsa1', text: 'Find Minimum in Rotated Sorted Array', tag: 'Medium', links: [nc('find-minimum-in-rotated-sorted-array'), lc('find-minimum-in-rotated-sorted-array')] },
+            { id: 'd6_dsa2', text: 'Search in Rotated Sorted Array', tag: 'Medium', links: [nc('find-target-in-rotated-sorted-array'), lc('search-in-rotated-sorted-array')] },
+            { id: 'd6_dsa3', text: 'Time Based Key-Value Store', tag: 'Medium', links: [nc('time-based-key-value-store'), lc('time-based-key-value-store')] },
+            {
+              id: 'd6_dsa4',
+              text: 'Reverse Linked List & Merge Two Sorted Lists',
+              tag: 'Easy',
+              links: [nc('reverse-a-linked-list', 'Reverse List'), nc('merge-two-sorted-linked-lists', 'Merge Lists')],
+            },
+          ],
+          gfe: [
+            {
+              id: 'd6_gfe1',
+              text: 'Map Async Limit (Async Task Runner with Concurrency Limit)',
+              tag: 'Async TS',
+              links: [gfe('javascript/map-async-limit', 'Map Async Limit'), gfe('javascript/map-async', 'Map Async')],
+            },
+            { id: 'd6_gfe2', text: 'Promisify & Promisify II', tag: 'Async TS', links: [gfe('javascript/promisify', 'Promisify')] },
+            { id: 'd6_gfe3', text: 'List Format (Human-readable string formatter)', tag: 'TS Utility', links: [gfe('javascript/list-format', 'List Format')] },
+          ],
+          sys: [
+            {
+              id: 'd6_sys1',
+              text: 'Design Offer-Agnostic BFF & Dynamic Widget Container',
+              tag: 'Architecture',
+              links: [{ label: 'GFE System Design Hub', url: 'https://www.greatfrontend.com/System-Design', type: 'sys' }],
+            },
+            { id: 'd6_sys2', text: 'Diagram Empath Collections/Payments BFF migration for whiteboard rounds', tag: 'Resume Tie-In', links: [] },
+            { id: 'd6_sys3', text: 'End-of-Day: Review Rotated Binary Search boundary invariant', tag: 'Spaced Rep', links: [] },
+          ],
+        },
+        {
+          day: 7,
+          week: 'week1',
+          title: 'Linked Lists II + Timed Vue.js UI Sprints + Week 1 Consolidation',
+          dsa: [
+            {
+              id: 'd7_dsa1',
+              text: 'Linked List Cycle & Reorder List (Fast/Slow Pointers)',
+              tag: 'Easy/Med',
+              links: [nc('linked-list-cycle-detection', 'Cycle'), nc('reorder-linked-list', 'Reorder List')],
+            },
+            { id: 'd7_dsa2', text: 'Remove Nth Node From End of List', tag: 'Medium', links: [nc('remove-node-from-end-of-linked-list'), lc('remove-nth-node-from-end-of-list')] },
+            { id: 'd7_dsa3', text: 'Copy List with Random Pointer', tag: 'Medium', links: [nc('copy-linked-list-with-random-pointer'), lc('copy-list-with-random-pointer')] },
+            { id: 'd7_dsa4', text: 'LRU Cache (HashMap + Doubly Linked List)', tag: 'Medium', links: [nc('lru-cache'), lc('lru-cache')] },
+            { id: 'd7_dsa5', text: 'Weekly Redo: Re-solve 3 flagged problems from Days 1–6', tag: 'Redo', links: [] },
+          ],
+          gfe: [
+            { id: 'd7_gfe1', text: 'Build Todo List in Vue.js / TypeScript (40-min timer)', tag: 'Vue UI', links: [gfe('user-interface/todo-list', 'Todo List UI')] },
+            { id: 'd7_gfe2', text: 'Build Contact Form with async POST & validation', tag: 'Vue UI', links: [gfe('user-interface/contact-form', 'Contact Form UI')] },
+          ],
+          sys: [{ id: 'd7_sys1', text: 'Audit Week 1 Pattern Trigger notes & take evening rest', tag: 'Review', links: [] }],
+        },
+
+        // ================= WEEK 2 =================
+        {
+          day: 8,
+          week: 'week2',
+          title: 'Trees I (DFS Recursion) + DOM Traversal Utilities + E-Commerce Design',
+          dsa: [
+            { id: 'd8_dsa1', text: 'Invert Binary Tree & Maximum Depth of Binary Tree', tag: 'Easy', links: [nc('invert-a-binary-tree', 'Invert Tree'), nc('depth-of-binary-tree', 'Max Depth')] },
+            { id: 'd8_dsa2', text: 'Diameter of Binary Tree', tag: 'Easy', links: [nc('binary-tree-diameter'), lc('diameter-of-binary-tree')] },
+            { id: 'd8_dsa3', text: 'Balanced Binary Tree', tag: 'Easy', links: [nc('balanced-binary-tree'), lc('balanced-binary-tree')] },
+            { id: 'd8_dsa4', text: 'Same Tree & Subtree of Another Tree', tag: 'Easy', links: [nc('same-binary-tree', 'Same Tree'), nc('subtree-of-a-binary-tree', 'Subtree')] },
+          ],
+          gfe: [
+            {
+              id: 'd8_gfe1',
+              text: 'getElementsByClassName & getElementsByTagName (DOM DFS)',
+              tag: 'DOM Tree',
+              links: [gfe('javascript/get-elements-by-class-name', 'ByClassName'), gfe('javascript/get-elements-by-tag-name', 'ByTagName')],
+            },
+            { id: 'd8_gfe2', text: 'getElementsByStyle (Computed styles & tree walk)', tag: 'DOM Tree', links: [gfe('javascript/get-elements-by-style', 'ByStyle')] },
+          ],
+          sys: [
+            { id: 'd8_sys1', text: 'Design E-Commerce Marketplace (Amazon) via RADIO framework', tag: 'GFE Design', links: [gfeSys('e-commerce-amazon', 'E-Commerce Guide')] },
+            { id: 'd8_sys2', text: 'Detail SSR vs CSR, cart synchronization & payment idempotency', tag: 'Full-Stack', links: [] },
+            { id: 'd8_sys3', text: 'End-of-Day: Re-solve LRU Cache from memory', tag: 'Spaced Rep', links: [nc('lru-cache')] },
+          ],
+        },
+        {
+          day: 9,
+          week: 'week2',
+          title: 'Trees II (BFS & BST) + Virtual DOM Serialization + Travel Booking Design',
+          dsa: [
+            {
+              id: 'd9_dsa1',
+              text: 'Lowest Common Ancestor of a Binary Search Tree',
+              tag: 'Medium',
+              links: [nc('lowest-common-ancestor-in-binary-search-tree'), lc('lowest-common-ancestor-of-a-binary-search-tree')],
+            },
+            { id: 'd9_dsa2', text: 'Binary Tree Level Order Traversal (BFS Queue)', tag: 'Medium', links: [nc('level-order-traversal-of-binary-tree'), lc('binary-tree-level-order-traversal')] },
+            { id: 'd9_dsa3', text: 'Binary Tree Right Side View', tag: 'Medium', links: [nc('binary-tree-right-side-view'), lc('binary-tree-right-side-view')] },
+            { id: 'd9_dsa4', text: 'Count Good Nodes in Binary Tree', tag: 'Medium', links: [nc('count-good-nodes-in-binary-tree'), lc('count-good-nodes-in-binary-tree')] },
+            { id: 'd9_dsa5', text: 'Validate Binary Search Tree (Min/Max range bounds)', tag: 'Medium', links: [nc('valid-binary-search-tree'), lc('validate-binary-search-tree')] },
+          ],
+          gfe: [
+            { id: 'd9_gfe1', text: 'Virtual DOM I (Serialize DOM tree to JSON object)', tag: 'DOM Tree', links: [gfe('javascript/virtual-dom-i', 'Virtual DOM I')] },
+            { id: 'd9_gfe2', text: 'HTML Serializer (Pretty-print nested AST with indentation)', tag: 'DOM Tree', links: [gfe('javascript/html-serializer', 'HTML Serializer')] },
+            { id: 'd9_gfe3', text: 'Identical DOM Trees (Simultaneous tree traversal)', tag: 'DOM Tree', links: [gfe('javascript/identical-dom-trees', 'Identical DOM Trees')] },
+          ],
+          sys: [
+            { id: 'd9_sys1', text: 'Design Travel Booking Platform (Airbnb / Expedia)', tag: 'GFE Design', links: [gfeSys('travel-booking-airbnb', 'Travel Booking Guide')] },
+            { id: 'd9_sys2', text: 'Focus on map-list state sync, search filter URL state & caching', tag: 'UI State', links: [] },
+            { id: 'd9_sys3', text: 'End-of-Day: Log Tree DFS vs BFS template triggers', tag: 'Spaced Rep', links: [] },
+          ],
+        },
+        {
+          day: 10,
+          week: 'week2',
+          title: 'Trees III & Tries + Accessible Vue Tabs/Accordion + Real-Time Chat Design',
+          dsa: [
+            { id: 'd10_dsa1', text: 'Kth Smallest Element in a BST (In-order traversal)', tag: 'Medium', links: [nc('kth-smallest-integer-in-bst'), lc('kth-smallest-element-in-a-bst')] },
+            {
+              id: 'd10_dsa2',
+              text: 'Construct Binary Tree from Preorder & Inorder Traversal',
+              tag: 'Medium',
+              links: [nc('binary-tree-from-preorder-and-inorder-traversal'), lc('construct-binary-tree-from-preorder-and-inorder-traversal')],
+            },
+            { id: 'd10_dsa3', text: 'Implement Trie (Prefix Tree)', tag: 'Medium', links: [nc('implement-prefix-tree'), lc('implement-trie-prefix-tree')] },
+            {
+              id: 'd10_dsa4',
+              text: 'Design Add and Search Words Data Structure (Trie + DFS)',
+              tag: 'Medium',
+              links: [nc('design-word-search-data-structure'), lc('design-add-and-search-words-data-structure')],
+            },
+          ],
+          gfe: [
+            {
+              id: 'd10_gfe1',
+              text: 'Build Tabs I, II & III in Vue.js (Full ARIA roles & arrow key nav)',
+              tag: 'Vue UI',
+              links: [gfe('user-interface/tabs', 'Tabs I'), gfe('user-interface/tabs-ii', 'Tabs II'), gfe('user-interface/tabs-iii', 'Tabs III')],
+            },
+            {
+              id: 'd10_gfe2',
+              text: 'Build Accordion Component with keyboard accessibility',
+              tag: 'Vue UI',
+              links: [gfe('user-interface/accordion', 'Accordion I'), gfe('user-interface/accordion-ii', 'Accordion II')],
+            },
+          ],
+          sys: [
+            { id: 'd10_sys1', text: 'Design Real-Time Chat Application (Slack / WhatsApp Web)', tag: 'GFE Design', links: [gfeSys('chat-application-facebook-messenger', 'Chat App Guide')] },
+            { id: 'd10_sys2', text: 'Compare WebSockets vs SSE vs Long Polling & offline queue sync', tag: 'Real-Time', links: [] },
+            { id: 'd10_sys3', text: 'End-of-Day: Practice writing a 25-line MinHeap helper in TypeScript', tag: 'TS Prep', links: [] },
+          ],
+        },
+        {
+          day: 11,
+          week: 'week2',
+          title: 'Heaps / Priority Queues + Interactive Star Rating & Progress UI',
+          dsa: [
+            {
+              id: 'd11_dsa1',
+              text: 'Kth Largest Element in a Stream & Last Stone Weight',
+              tag: 'Easy',
+              links: [nc('kth-largest-integer-in-a-stream', 'Kth Stream'), nc('last-stone-weight', 'Last Stone')],
+            },
+            { id: 'd11_dsa2', text: 'K Closest Points to Origin', tag: 'Medium', links: [nc('k-closest-points-to-origin'), lc('k-closest-points-to-origin')] },
+            { id: 'd11_dsa3', text: 'Kth Largest Element in an Array', tag: 'Medium', links: [nc('kth-largest-element-in-an-array'), lc('kth-largest-element-in-an-array')] },
+            { id: 'd11_dsa4', text: 'Task Scheduler (Max-Heap + Cooldown Queue)', tag: 'Medium', links: [nc('task-scheduling'), lc('task-scheduler')] },
+            { id: 'd11_dsa5', text: 'Find Median from Data Stream (Two Heaps: Min + Max)', tag: 'Hard', links: [nc('find-median-in-a-data-stream'), lc('find-median-from-data-stream')] },
+          ],
+          gfe: [
+            { id: 'd11_gfe1', text: 'Build Star Rating Widget (Hover preview + click state in Vue)', tag: 'Vue UI', links: [gfe('user-interface/star-rating', 'Star Rating')] },
+            {
+              id: 'd11_gfe2',
+              text: 'Build Concurrency-Limited Progress Bars Queue',
+              tag: 'Vue UI',
+              links: [gfe('user-interface/progress-bars', 'Progress Bars I'), gfe('user-interface/progress-bars-ii', 'Progress Bars II')],
+            },
+          ],
+          sys: [
+            { id: 'd11_sys1', text: 'Design Real-Time Notification Service & Toast Manager', tag: 'Full-Stack', links: [] },
+            { id: 'd11_sys2', text: 'End-of-Day: Re-solve 2 flagged Tree/Trie problems', tag: 'Spaced Rep', links: [] },
+          ],
+        },
+        {
+          day: 12,
+          week: 'week2',
+          title: 'Graphs I (Grid BFS/DFS) + API-Driven Job Board + Video Streaming Design',
+          dsa: [
+            { id: 'd12_dsa1', text: 'Number of Islands & Max Area of Island', tag: 'Medium', links: [nc('count-number-of-islands', 'Number of Islands'), nc('max-area-of-island', 'Max Area')] },
+            { id: 'd12_dsa2', text: 'Clone Graph (HashMap + BFS/DFS)', tag: 'Medium', links: [nc('clone-graph'), lc('clone-graph')] },
+            { id: 'd12_dsa3', text: 'Islands and Treasure / Walls and Gates (Multi-source BFS)', tag: 'Medium', links: [nc('islands-and-treasure'), lc('walls-and-gates')] },
+            { id: 'd12_dsa4', text: 'Rotting Oranges (Multi-source BFS)', tag: 'Medium', links: [nc('rotting-fruit'), lc('rotting-oranges')] },
+          ],
+          gfe: [
+            { id: 'd12_gfe1', text: 'Build Hacker News Job Board (Fetch pagination + Promise.all)', tag: 'Vue UI', links: [gfe('user-interface/job-board', 'Job Board UI')] },
+            { id: 'd12_gfe2', text: 'Build Holy Grail Layout (CSS Flexbox / Grid responsive layout)', tag: 'CSS Layout', links: [gfe('user-interface/holy-grail', 'Holy Grail')] },
+          ],
+          sys: [
+            { id: 'd12_sys1', text: 'Design Video Streaming Player & Platform (Netflix / YouTube)', tag: 'GFE Design', links: [gfeSys('video-streaming-netflix', 'Video Streaming Guide')] },
+            { id: 'd12_sys2', text: 'Cover adaptive bitrate streaming (HLS/DASH), buffering & CDN edge', tag: 'Full-Stack', links: [] },
+            { id: 'd12_sys3', text: 'End-of-Day: Review Multi-Source BFS template', tag: 'Spaced Rep', links: [] },
+          ],
+        },
+        {
+          day: 13,
+          week: 'week2',
+          title: 'Graphs II (Topological Sort) + State Machine UI + Dependency Graph Design',
+          dsa: [
+            { id: 'd13_dsa1', text: 'Pacific Atlantic Water Flow (Reverse Ocean DFS/BFS)', tag: 'Medium', links: [nc('pacific-atlantic-water-flow'), lc('pacific-atlantic-water-flow')] },
+            { id: 'd13_dsa2', text: 'Surrounded Regions', tag: 'Medium', links: [nc('surrounded-regions'), lc('surrounded-regions')] },
+            { id: 'd13_dsa3', text: "Course Schedule (Cycle Detection / Kahn's Indegree)", tag: 'Medium', links: [nc('course-schedule'), lc('course-schedule')] },
+            { id: 'd13_dsa4', text: 'Course Schedule II (Topological Ordering)', tag: 'Medium', links: [nc('course-schedule-ii'), lc('course-schedule-ii')] },
+            {
+              id: 'd13_dsa5',
+              text: 'Graph Valid Tree & Number of Connected Components',
+              tag: 'Medium',
+              links: [nc('valid-tree', 'Valid Tree'), nc('count-connected-components', 'Connected Components')],
+            },
+          ],
+          gfe: [
+            { id: 'd13_gfe1', text: 'Build Traffic Light Component (Timer cleanup & state machine)', tag: 'Vue UI', links: [gfe('user-interface/traffic-light', 'Traffic Light')] },
+            { id: 'd13_gfe2', text: 'Build Digital Clock & Stopwatch', tag: 'Vue UI', links: [gfe('user-interface/digital-clock', 'Digital Clock'), gfe('user-interface/stopwatch', 'Stopwatch')] },
+          ],
+          sys: [
+            { id: 'd13_sys1', text: 'Design Enterprise Dependency Mapping & Incident Health UI', tag: 'Resume Tie-In', links: [] },
+            { id: 'd13_sys2', text: 'Map your Cloud Falcon (Python/Flask/PostgreSQL) & Cytoscape architecture', tag: 'Resume Tie-In', links: [] },
+            { id: 'd13_sys3', text: "End-of-Day: Write Kahn's Topological Sort template from memory", tag: 'Spaced Rep', links: [] },
+          ],
+        },
+        {
+          day: 14,
+          week: 'week2',
+          title: 'Week 2 Spaced Repetition + Timed 45m Typeahead Build',
+          dsa: [
+            { id: 'd14_dsa1', text: 'Serialize and Deserialize Binary Tree', tag: 'Hard', links: [nc('serialize-and-deserialize-binary-tree'), lc('serialize-and-deserialize-binary-tree')] },
+            { id: 'd14_dsa2', text: 'Weekly Redo: Re-solve 4 flagged Tree, Heap, or Graph problems under 20m each', tag: 'Redo', links: [] },
+          ],
+          gfe: [
+            { id: 'd14_gfe1', text: 'Timed Mock: Build an Autocomplete / Typeahead Widget in 45 mins', tag: '45m Mock', links: [gfeSys('autocomplete', 'Autocomplete Spec')] },
+            { id: 'd14_gfe2', text: 'Verify debounce, race-condition AbortController & keyboard selection', tag: 'Checklist', links: [] },
+          ],
+          sys: [{ id: 'd14_sys1', text: 'Rest afternoon & review Week 2 RADIO system design diagrams', tag: 'Review', links: [] }],
+        },
+
+        // ================= WEEK 3 =================
+        {
+          day: 15,
+          week: 'week3',
+          title: 'Backtracking + Pub-Sub EventEmitter + Collaborative Docs Design',
+          dsa: [
+            { id: 'd15_dsa1', text: 'Subsets & Subsets II', tag: 'Medium', links: [nc('subsets', 'Subsets I'), nc('subsets-ii', 'Subsets II')] },
+            { id: 'd15_dsa2', text: 'Combination Sum & Combination Sum II', tag: 'Medium', links: [nc('combination-target-sum', 'Comb Sum I'), nc('combination-target-sum-ii', 'Comb Sum II')] },
+            { id: 'd15_dsa3', text: 'Permutations', tag: 'Medium', links: [nc('permutations'), lc('permutations')] },
+            { id: 'd15_dsa4', text: 'Word Search (2D Grid Backtracking)', tag: 'Medium', links: [nc('search-for-word'), lc('word-search')] },
+          ],
+          gfe: [
+            {
+              id: 'd15_gfe1',
+              text: 'EventEmitter I & II (on, off, emit, once listener management)',
+              tag: 'TS Class',
+              links: [gfe('javascript/event-emitter', 'EventEmitter I'), gfe('javascript/event-emitter-ii', 'EventEmitter II')],
+            },
+            { id: 'd15_gfe2', text: 'Backbone Model / Reactive State Observer', tag: 'TS Class', links: [gfe('javascript/backbone-model', 'Backbone Model')] },
+          ],
+          sys: [
+            { id: 'd15_sys1', text: 'Design Collaborative Editor (Google Docs) or Drawing Canvas', tag: 'GFE Design', links: [gfeSys('collaborative-editor-google-docs', 'Google Docs Guide')] },
+            { id: 'd15_sys2', text: 'Understand high-level WebSockets presence, locking & CRDT/OT trade-offs', tag: 'Full-Stack', links: [] },
+            { id: 'd15_sys3', text: 'End-of-Day: Review Backtracking choose/explore/unchoose template', tag: 'Spaced Rep', links: [] },
+          ],
+        },
+        {
+          day: 16,
+          week: 'week3',
+          title: 'Intervals & Greedy + Recursive File Explorer UI + Masonry Layout',
+          dsa: [
+            { id: 'd16_dsa1', text: 'Insert Interval & Merge Intervals', tag: 'Medium', links: [nc('insert-new-interval', 'Insert Interval'), nc('merge-intervals', 'Merge Intervals')] },
+            { id: 'd16_dsa2', text: 'Non-overlapping Intervals', tag: 'Medium', links: [nc('non-overlapping-intervals'), lc('non-overlapping-intervals')] },
+            {
+              id: 'd16_dsa3',
+              text: 'Meeting Rooms I & Meeting Rooms II (Min-Heap / Sweep Line)',
+              tag: 'Easy/Med',
+              links: [nc('meeting-schedule', 'Meeting Rooms I'), nc('meeting-schedule-ii', 'Meeting Rooms II')],
+            },
+            { id: 'd16_dsa4', text: "Maximum Subarray (Kadane's Algorithm) & Jump Game", tag: 'Medium', links: [nc('maximum-subarray', 'Max Subarray'), nc('jump-game', 'Jump Game')] },
+          ],
+          gfe: [
+            { id: 'd16_gfe1', text: 'Build File Explorer (Recursive Tree UI with expand/collapse in Vue)', tag: 'Vue UI', links: [gfe('user-interface/file-explorer', 'File Explorer')] },
+            { id: 'd16_gfe2', text: 'Build Signup Form / Multi-Step Form with validation', tag: 'Vue UI', links: [gfe('user-interface/signup-form', 'Signup Form')] },
+          ],
+          sys: [
+            { id: 'd16_sys1', text: 'Design Pinterest Masonry Grid & Poll Widget', tag: 'GFE Design', links: [gfeSys('pinterest', 'Pinterest Guide'), gfeSys('poll-widget', 'Poll Widget')] },
+            { id: 'd16_sys2', text: 'End-of-Day: Re-solve Merge Intervals + Meeting Rooms II', tag: 'Spaced Rep', links: [nc('merge-intervals'), nc('meeting-schedule-ii')] },
+          ],
+        },
+        {
+          day: 17,
+          week: 'week3',
+          title: '1D Dynamic Programming I + Data Table UI Build + Backend Ticketmaster Design',
+          dsa: [
+            { id: 'd17_dsa1', text: 'Climbing Stairs & Min Cost Climbing Stairs', tag: 'Easy', links: [nc('climbing-stairs', 'Climbing Stairs'), nc('min-cost-climbing-stairs', 'Min Cost Stairs')] },
+            { id: 'd17_dsa2', text: 'House Robber & House Robber II (Circular array split)', tag: 'Medium', links: [nc('house-robber', 'House Robber I'), nc('house-robber-ii', 'House Robber II')] },
+            {
+              id: 'd17_dsa3',
+              text: 'Longest Palindromic Substring & Palindromic Substrings (Expand around center)',
+              tag: 'Medium',
+              links: [nc('longest-palindromic-substring', 'Longest Palindrome'), nc('palindromic-substrings', 'Count Palindromes')],
+            },
+          ],
+          gfe: [
+            {
+              id: 'd17_gfe1',
+              text: 'Build Data Table I & II in Vue.js (Sorting, pagination, page size)',
+              tag: 'Vue UI',
+              links: [gfe('user-interface/data-table', 'Data Table I'), gfe('user-interface/data-table-ii', 'Data Table II')],
+            },
+            { id: 'd17_gfe2', text: 'Build Transfer List (Move items between two lists)', tag: 'Vue UI', links: [gfe('user-interface/transfer-list', 'Transfer List')] },
+          ],
+          sys: [
+            {
+              id: 'd17_sys1',
+              text: 'Hello Interview Bridge: Design Ticketmaster (High-contention booking)',
+              tag: 'Backend/Full-Stack',
+              links: [hi('problem-breakdowns/ticketmaster', 'Ticketmaster Breakdown')],
+            },
+            { id: 'd17_sys2', text: 'Cover PostgreSQL/RDS row locking, Redis distributed locks & waiting queues', tag: 'AWS/DB Tie-In', links: [] },
+            { id: 'd17_sys3', text: 'End-of-Day: Log 1D DP recurrence relations', tag: 'Spaced Rep', links: [] },
+          ],
+        },
+        {
+          day: 18,
+          week: 'week3',
+          title: '1D Dynamic Programming II + Modal Dialog UI + Distributed Rate Limiter',
+          dsa: [
+            { id: 'd18_dsa1', text: 'Decode Ways', tag: 'Medium', links: [nc('decode-ways'), lc('decode-ways')] },
+            { id: 'd18_dsa2', text: 'Coin Change (Bottom-up unbounded knapsack)', tag: 'Medium', links: [nc('coin-change'), lc('coin-change')] },
+            { id: 'd18_dsa3', text: 'Word Break', tag: 'Medium', links: [nc('word-break'), lc('word-break')] },
+            {
+              id: 'd18_dsa4',
+              text: 'Longest Increasing Subsequence & Maximum Product Subarray',
+              tag: 'Medium',
+              links: [nc('longest-increasing-subsequence', 'LIS'), nc('maximum-product-subarray', 'Max Product')],
+            },
+          ],
+          gfe: [
+            { id: 'd18_gfe1', text: 'Build Modal Dialog in Vue.js (Click outside, Escape key, Focus trap)', tag: 'Vue UI', links: [gfe('user-interface/modal-dialog', 'Modal Dialog UI')] },
+            { id: 'd18_gfe2', text: 'JSON.stringify Polyfill (Bonus tough JS recursion problem)', tag: 'JS Mechanics', links: [gfe('javascript/json-stringify', 'JSON.stringify')] },
+          ],
+          sys: [
+            {
+              id: 'd18_sys1',
+              text: 'Hello Interview Bridge: Design Distributed Rate Limiter & API Gateway',
+              tag: 'Backend/Full-Stack',
+              links: [hi('problem-breakdowns/distributed-rate-limiter', 'Rate Limiter Breakdown')],
+            },
+            { id: 'd18_sys2', text: 'Connect to TSYS Account ID validation & Common Root Container routing fix', tag: 'Resume Tie-In', links: [] },
+            { id: 'd18_sys3', text: 'End-of-Day: Re-solve Coin Change & Word Break', tag: 'Spaced Rep', links: [nc('coin-change'), nc('word-break')] },
+          ],
+        },
+        {
+          day: 19,
+          week: 'week3',
+          title: 'Full Mock Loop Day 1 + Behavioral & Architecture Deep Dives (Part 1)',
+          dsa: [
+            {
+              id: 'd19_dsa1',
+              text: '45m Timed Mock: 1 Random Sliding Window/Two-Pointer Medium + 1 Tree Medium',
+              tag: 'Mock Round',
+              links: [{ label: 'NeetCode Practice', url: 'https://neetcode.io/practice', type: 'nc' }],
+            },
+            { id: 'd19_dsa2', text: 'Re-solve any flagged Week 1 problems you hesitated on', tag: 'Redo', links: [] },
+          ],
+          gfe: [
+            {
+              id: 'd19_gfe1',
+              text: '45m Timed Mock: 1 Async JS Utility + 1 Interactive Vue.js Component',
+              tag: 'Mock Round',
+              links: [{ label: 'GFE 75 List', url: 'https://www.greatfrontend.com/interviews/gfe75', type: 'gfe' }],
+            },
+          ],
+          sys: [
+            { id: 'd19_sys1', text: 'Rehearse STAR Story #1: Empath BFF Migration (80% code overhead reduction)', tag: 'Behavioral', links: [] },
+            { id: 'd19_sys2', text: 'Rehearse STAR Story #2: `ViewOffers` UI Component Generalization (500 to 250 LOC)', tag: 'Behavioral', links: [] },
+            { id: 'd19_sys3', text: '45m Timed System Design Mock: Pick 1 unseen GFE prompt & whiteboard live', tag: 'Mock Round', links: [gfeSys('news-feed-facebook', 'GFE Design Prompts')] },
+          ],
+        },
+        {
+          day: 20,
+          week: 'week3',
+          title: 'Full Mock Loop Day 2 + Behavioral & Architecture Deep Dives (Part 2)',
+          dsa: [
+            {
+              id: 'd20_dsa1',
+              text: '45m Timed Mock: 1 Random Graph/Heap Medium + 1 Backtracking/1D-DP Medium',
+              tag: 'Mock Round',
+              links: [{ label: 'NeetCode Practice', url: 'https://neetcode.io/practice', type: 'nc' }],
+            },
+            { id: 'd20_dsa2', text: 'Re-solve any flagged Week 2 or Week 3 problems', tag: 'Redo', links: [] },
+          ],
+          gfe: [
+            {
+              id: 'd20_gfe1',
+              text: '45m Timed Mock: 1 DOM/Object Utility + 1 Complex Form/Table UI in Vue',
+              tag: 'Mock Round',
+              links: [{ label: 'GFE 75 List', url: 'https://www.greatfrontend.com/interviews/gfe75', type: 'gfe' }],
+            },
+          ],
+          sys: [
+            { id: 'd20_sys1', text: 'Rehearse STAR Story #3: EELB/AFRU Automation ($1.8M savings, 1-3m call reduction)', tag: 'Behavioral', links: [] },
+            { id: 'd20_sys2', text: 'Rehearse STAR Story #4: TSYS DNC Compliance Fix + Playwright/Mimeo Testing', tag: 'Behavioral', links: [] },
+            {
+              id: 'd20_sys3',
+              text: '45m Timed System Design Mock: Full-Stack E-Commerce or Chat App',
+              tag: 'Mock Round',
+              links: [gfeSys('e-commerce-amazon', 'E-Commerce'), gfeSys('chat-application-facebook-messenger', 'Chat App')],
+            },
+          ],
+        },
+        {
+          day: 21,
+          week: 'week3',
+          title: 'Final Dress Rehearsal & Pre-Interview Cheat Sheet Review',
+          dsa: [
+            {
+              id: 'd21_dsa1',
+              text: 'Review your 1-Page Pattern Trigger Sheet (Sliding Window, BFS/DFS, TopSort, Heap)',
+              tag: 'Final Polish',
+              links: [{ label: 'NeetCode Roadmap', url: 'https://neetcode.io/roadmap', type: 'nc' }],
+            },
+            { id: 'd21_dsa2', text: 'Solve 2 confidence-building Medium problems in 30 mins total', tag: 'Warmup', links: [] },
+          ],
+          gfe: [
+            { id: 'd21_gfe1', text: 'Review Vue.js Reactivity (ref/computed/watch), Event Delegation & ARIA checklist', tag: 'Final Polish', links: [] },
+            {
+              id: 'd21_gfe2',
+              text: 'Review Debounce, Throttle, Promise.all & Deep Clone one final time',
+              tag: 'Warmup',
+              links: [gfe('javascript/debounce', 'Debounce'), gfe('javascript/promise-all', 'Promise.all'), gfe('javascript/deep-clone', 'Deep Clone')],
+            },
+          ],
+          sys: [
+            {
+              id: 'd21_sys1',
+              text: 'Review RADIO time-boxing checkpoints (5m R / 10m A / 10m D / 10m I / 10m O)',
+              tag: 'Final Polish',
+              links: [{ label: 'RADIO Playbook', url: 'https://www.greatfrontend.com/front-end-system-design-playbook', type: 'sys' }],
+            },
+            { id: 'd21_sys2', text: 'Rest in the evening — you are interview-ready!', tag: 'Done', links: [] },
+          ],
+        },
+      ]
+
+      const STAR_STORIES = [
+        {
+          id: 'star_bff',
+          title: '1. Architectural Scale: Empath BFF Migration (80% Overhead Reduction)',
+          prompt: "Best for: 'Tell me about your most impactful architectural decision' / Frontend & Full-Stack System Design rounds.",
+          defaultText:
+            'SITUATION: Adding new credit/collections offers in the Empath Collections and Payments Containers required modifying 10+ frontend files due to tightly coupled UI business logic.\nTASK: Architect an offer-agnostic frontend framework that decoupled business rules from the UI.\nACTION: Migrated complex eligibility and rendering logic to a Backend-for-Frontend (BFF) layer and standardized the API contract.\nRESULT: Slashed frontend code modification overhead for new offers by 80% (from 10+ files down to 2 files) and accelerated product launches.',
+        },
+        {
+          id: 'star_eelb',
+          title: '2. End-to-End Business Impact: EELB/AFRU Workflow Automation ($1.8M Saved)',
+          prompt: "Best for: 'Tell me about a project where you drove measurable business impact across frontend and backend.'",
+          defaultText:
+            'SITUATION: Customer service agents manually verified queue IDs and business segments during EELB/AFRU eligibility flows, adding 1–3 minutes per call.\nTASK: Lead end-to-end automation across UI and backend microservices.\nACTION: Streamlined queue ID and business segment checks across the full stack (Vue.js/TypeScript UI + backend services).\nRESULT: Reduced agent call handling times by 1–3 minutes, avoided 41 surge hires, and saved $1.8M in operational expenses.',
+        },
+        {
+          id: 'star_viewoffers',
+          title: '3. Component Generalization: ViewOffers UI Refactor (50% Complexity Cut)',
+          prompt: "Best for: 'Tell me about a time you improved code quality, maintainability, or frontend component architecture.'",
+          defaultText:
+            'SITUATION: The ViewOffers UI component had grown to 500+ lines with brittle, offer-specific conditional branches.\nTASK: Generalize the component so future offer rollouts required zero custom UI code.\nACTION: Redesigned ViewOffers into a dynamic, schema/config-driven Vue.js & TypeScript component.\nRESULT: Cut component complexity by 50% (500+ lines to 250+ lines) and eliminated custom frontend code for subsequent offer launches.',
+        },
+        {
+          id: 'star_tsys',
+          title: '4. Production Incident & Quality: TSYS DNC Fix + Playwright/Mimeo Automation',
+          prompt: "Best for: 'Tell me about a critical production bug you resolved and how you prevented regressions.'",
+          defaultText:
+            'SITUATION: Upstream API error spikes and Do Not Call (DNC) compliance infractions were occurring due to invalid TSYS account IDs.\nTASK: Stop the immediate compliance bleed and engineer a resilient long-term routing and testing solution.\nACTION: Deployed an immediate TSYS account ID validation check, designed a long-term API routing fix in the Common Root Container, and spearheaded Playwright E2E automation with Mimeo service mocking.\nRESULT: Eliminated DNC compliance infractions, stabilized upstream APIs, and upskilled peers through PR reviews and testing mentorship.',
+        },
+        {
+          id: 'star_falcon',
+          title: '5. 0-to-1 Full-Stack Ownership: Cloud Falcon APIs & Cytoscape Graph UI',
+          prompt: "Best for: 'Tell me about building a system from scratch' / Graph & Visualization discussions.",
+          defaultText:
+            'SITUATION: Engineering teams lacked visibility into upstream and downstream microservice dependencies during incidents, and the team had a backend resource gap.\nTASK: Architect v1 of the Cloud Falcon dependency-mapping platform across API, database, and UI.\nACTION: Built OpenAPI-compliant Python/Flask REST APIs backed by PostgreSQL, designed the AngularJS/SCSS incident health UI, and engineered custom Cytoscape interactive graph visualization hooks + Splunk verification scripts.\nRESULT: Delivered end-to-end dependency mapping and accelerated enterprise root-cause analysis.',
+        },
+        {
+          id: 'star_cheatsheet',
+          title: '6. Personal Pattern Trigger & RADIO Time-Box Cheat Sheet',
+          prompt: 'Keep your favorite algorithm invariants and RADIO timing reminders here for quick pre-interview review.',
+          defaultText:
+            'RADIO SYSTEM DESIGN TIMING (45 Mins):\n• [00–05m] R - Requirements (Functional, Non-Functional, Devices, Offline/SSR)\n• [05–15m] A - Architecture (Client Store, View, Controller, BFF Layer, CDN)\n• [15–25m] D - Data Model (Normalized client state shape, server entities, pagination cursors)\n• [25–35m] I - Interface / API (REST/GraphQL payloads, WebSocket/SSE events, component props)\n• [35–45m] O - Optimizations (Debounce, virtualization, code-splitting, ARIA accessibility, CloudFront caching)',
+        },
+      ]
+
+      const STORAGE_KEY = 'daniel_21day_sprint_v1'
+      let state = {
+        completed: {},
+        flagged: {},
+        collapsedDays: {},
+        dayNotes: {},
+        starNotes: {},
+      }
+      let activeTab = 'week1'
+
+      function loadState() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY)
+          if (raw) {
+            state = Object.assign(state, JSON.parse(raw))
+          }
+        } catch (e) {
+          console.error('Failed to load state:', e)
+        }
+      }
+
+      function saveState() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state))
+          updateStats()
+        } catch (e) {
+          console.error('Failed to save state:', e)
+        }
+      }
+
+      function toggleTask(taskId) {
+        state.completed[taskId] = !state.completed[taskId]
+        saveState()
+        renderDays()
+      }
+
+      function toggleFlag(taskId, event) {
+        event.stopPropagation()
+        state.flagged[taskId] = !state.flagged[taskId]
+        saveState()
+        renderDays()
+      }
+
+      function toggleCollapseDay(dayNum) {
+        state.collapsedDays[dayNum] = !state.collapsedDays[dayNum]
+        saveState()
+        renderDays()
+      }
+
+      function updateDayNote(dayNum, value) {
+        state.dayNotes[dayNum] = value
+        saveState()
+      }
+
+      function updateStarNote(starId, value) {
+        state.starNotes[starId] = value
+        saveState()
+      }
+
+      function switchTab(tab, btnEl) {
+        activeTab = tab
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'))
+        btnEl.classList.add('active')
+
+        const daysContainer = document.getElementById('daysContainer')
+        const starContainer = document.getElementById('starContainer')
+
+        if (tab === 'star') {
+          daysContainer.classList.add('hidden')
+          starContainer.classList.remove('hidden')
+          renderStarStories()
+        } else {
+          starContainer.classList.add('hidden')
+          daysContainer.classList.remove('hidden')
+          renderDays()
+        }
+      }
+
+      function filterMatches(task, query, statusFilter) {
+        const isDone = !!state.completed[task.id]
+        const isFlagged = !!state.flagged[task.id]
+
+        if (statusFilter === 'todo' && isDone) return false
+        if (statusFilter === 'done' && !isDone) return false
+        if (statusFilter === 'flagged' && !isFlagged) return false
+
+        if (query) {
+          const q = query.toLowerCase()
+          return task.text.toLowerCase().includes(q) || task.tag.toLowerCase().includes(q)
+        }
+        return true
+      }
+
+      function renderLinks(links) {
+        if (!links || links.length === 0) return ''
+        const badges = links
+          .map(l => {
+            const cls = l.type === 'nc' ? 'link-nc' : l.type === 'lc' ? 'link-lc' : l.type === 'gfe' ? 'link-gfe' : 'link-sys'
+            return `<a href="${l.url}" target="_blank" rel="noopener noreferrer" class="problem-link ${cls}">${l.label} ↗</a>`
+          })
+          .join('')
+        return `<div class="task-links">${badges}</div>`
+      }
+
+      function renderTaskBlock(title, blockClass, timeLabel, tasks, query, statusFilter) {
+        const visibleTasks = tasks.filter(t => filterMatches(t, query, statusFilter))
+        const itemsHtml = visibleTasks
+          .map(t => {
+            const isDone = !!state.completed[t.id]
+            const isFlagged = !!state.flagged[t.id]
+            return `
+          <li class="task-item ${isDone ? 'completed' : ''} ${isFlagged ? 'flagged' : ''}">
+            <div class="task-left">
+              <input type="checkbox" ${isDone ? 'checked' : ''} onchange="toggleTask('${t.id}')" />
+              <div class="task-content">
+                <div class="task-title-row">
+                  <span class="task-text" onclick="toggleTask('${t.id}')">${t.text}</span>
+                  <span class="tag-chip">${t.tag}</span>
+                </div>
+                ${renderLinks(t.links)}
+              </div>
+            </div>
+            <button class="flag-btn" title="Flag for Spaced Repetition Redo" onclick="toggleFlag('${t.id}', event)">
+              🚩
+            </button>
+          </li>
+        `
+          })
+          .join('')
+
+        return `
+        <div class="block-col">
+          <div class="block-header ${blockClass}">
+            <span>${title}</span>
+            <span>${timeLabel}</span>
+          </div>
+          <ul class="task-list">
+            ${itemsHtml || '<li style="font-size:0.8rem;color:var(--text-muted);padding:4px;">No matching tasks in filter.</li>'}
+          </ul>
+        </div>
+      `
+      }
+
+      function renderDays() {
+        const container = document.getElementById('daysContainer')
+        const query = document.getElementById('searchInput').value.trim()
+        const statusFilter = document.getElementById('statusFilter').value
+
+        const weekDays = SPRINT_DATA.filter(d => d.week === activeTab)
+
+        container.innerHTML = weekDays
+          .map(d => {
+            const allDayTasks = [...d.dsa, ...d.gfe, ...d.sys]
+            const doneCount = allDayTasks.filter(t => state.completed[t.id]).length
+            const totalCount = allDayTasks.length
+            const isAllDone = doneCount === totalCount && totalCount > 0
+            const isCollapsed = !!state.collapsedDays[d.day]
+            const savedNote = state.dayNotes[d.day] || ''
+
+            return `
+          <div class="day-card ${isAllDone ? 'day-complete' : ''}">
+            <div class="day-header" onclick="toggleCollapseDay(${d.day})">
+              <div class="day-title-wrap">
+                <span class="day-badge">Day ${d.day}</span>
+                <span class="day-title">${d.title}</span>
+              </div>
+              <div class="day-meta">
+                <span>${doneCount} / ${totalCount} completed ${isAllDone ? '✅' : ''}</span>
+                <span>${isCollapsed ? '▼ Expand' : '▲ Collapse'}</span>
+              </div>
+            </div>
+
+            <div class="day-body ${isCollapsed ? 'collapsed' : ''}">
+              ${renderTaskBlock('Block 1: NeetCode DSA', 'block-dsa', '2.5 Hrs', d.dsa, query, statusFilter)}
+              ${renderTaskBlock('Block 2: GFE 75 (TS / Vue UI)', 'block-gfe', '1.5 Hrs', d.gfe, query, statusFilter)}
+              ${renderTaskBlock('Block 3 & 4: System Design & Review', 'block-sys', '2.0 Hrs', d.sys, query, statusFilter)}
+
+              <div class="day-notes">
+                <label>📝 Day ${d.day} Pattern Trigger & Edge Case Log (Auto-Saved)</label>
+                <textarea
+                  placeholder="Log 1-line triggers here (e.g. Problem -> Trigger Clue -> Invariant -> Edge Case Missed)..."
+                  oninput="updateDayNote(${d.day}, this.value)"
+                >${savedNote}</textarea>
+              </div>
+            </div>
+          </div>
+        `
+          })
+          .join('')
+
+        updateStats()
+      }
+
+      function renderStarStories() {
+        const container = document.getElementById('starContainer')
+        container.innerHTML = STAR_STORIES.map(s => {
+          const textVal = state.starNotes[s.id] !== undefined ? state.starNotes[s.id] : s.defaultText
+          return `
+          <div class="star-card">
+            <h3>${s.title}</h3>
+            <p>${s.prompt}</p>
+            <textarea
+              class="star-textarea"
+              rows="7"
+              oninput="updateStarNote('${s.id}', this.value)"
+            >${textVal}</textarea>
+          </div>
+        `
+        }).join('')
+      }
+
+      function updateStats() {
+        let dsaTotal = 0,
+          dsaDone = 0
+        let gfeTotal = 0,
+          gfeDone = 0
+        let sysTotal = 0,
+          sysDone = 0
+
+        SPRINT_DATA.forEach(d => {
+          d.dsa.forEach(t => {
+            dsaTotal++
+            if (state.completed[t.id]) dsaDone++
+          })
+          d.gfe.forEach(t => {
+            gfeTotal++
+            if (state.completed[t.id]) gfeDone++
+          })
+          d.sys.forEach(t => {
+            sysTotal++
+            if (state.completed[t.id]) sysDone++
+          })
+        })
+
+        const overallTotal = dsaTotal + gfeTotal + sysTotal
+        const overallDone = dsaDone + gfeDone + sysDone
+        const overallPct = overallTotal ? Math.round((overallDone / overallTotal) * 100) : 0
+
+        document.getElementById('overallStatText').textContent = `${overallDone} / ${overallTotal} (${overallPct}%)`
+        document.getElementById('overallProgress').style.width = `${overallPct}%`
+
+        document.getElementById('dsaStatText').textContent = `${dsaDone} / ${dsaTotal}`
+        document.getElementById('dsaProgress').style.width = `${dsaTotal ? (dsaDone / dsaTotal) * 100 : 0}%`
+
+        document.getElementById('gfeStatText').textContent = `${gfeDone} / ${gfeTotal}`
+        document.getElementById('gfeProgress').style.width = `${gfeTotal ? (gfeDone / gfeTotal) * 100 : 0}%`
+
+        document.getElementById('sysStatText').textContent = `${sysDone} / ${sysTotal}`
+        document.getElementById('sysProgress').style.width = `${sysTotal ? (sysDone / sysTotal) * 100 : 0}%`
+      }
+
+      function downloadSelfHtml() {
+        const htmlContent = '<!DOCTYPE html>\n' + document.documentElement.outerHTML
+        const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' })
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = 'interview-sprint-tracker.html'
+        document.body.appendChild(a)
+        a.click()
+        a.remove()
+        URL.revokeObjectURL(url)
+      }
+
+      function exportProgress() {
+        const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(state, null, 2))
+        const a = document.createElement('a')
+        a.setAttribute('href', dataStr)
+        a.setAttribute('download', 'interview-sprint-progress.json')
+        document.body.appendChild(a)
+        a.click()
+        a.remove()
+      }
+
+      function importProgress(event) {
+        const file = event.target.files[0]
+        if (!file) return
+        const reader = new FileReader()
+        reader.onload = function (e) {
+          try {
+            const imported = JSON.parse(e.target.result)
+            state = Object.assign(state, imported)
+            saveState()
+            renderDays()
+            renderStarStories()
+          } catch (err) {
+            alert('Invalid JSON backup file.')
+          }
+        }
+        reader.readAsText(file)
+      }
+
+      let timerSeconds = 25 * 60
+      let defaultMinutes = 25
+      let timerInterval = null
+
+      function updateTimerDisplay() {
+        const m = String(Math.floor(timerSeconds / 60)).padStart(2, '0')
+        const s = String(timerSeconds % 60).padStart(2, '0')
+        document.getElementById('timerDisplay').textContent = `${m}:${s}`
+      }
+
+      function toggleTimer() {
+        const btn = document.getElementById('timerStartBtn')
+        if (timerInterval) {
+          clearInterval(timerInterval)
+          timerInterval = null
+          btn.textContent = 'Resume'
+        } else {
+          btn.textContent = 'Pause'
+          timerInterval = setInterval(() => {
+            if (timerSeconds > 0) {
+              timerSeconds--
+              updateTimerDisplay()
+            } else {
+              clearInterval(timerInterval)
+              timerInterval = null
+              btn.textContent = 'Start'
+              alert("⏰ Time's up! Wrap up your solution or check the walkthrough.")
+            }
+          }, 1000)
+        }
+      }
+
+      function setTimer(mins) {
+        if (timerInterval) {
+          clearInterval(timerInterval)
+          timerInterval = null
+        }
+        defaultMinutes = mins
+        timerSeconds = mins * 60
+        document.getElementById('timerStartBtn').textContent = 'Start'
+        updateTimerDisplay()
+      }
+
+      function resetTimer() {
+        setTimer(defaultMinutes)
+      }
+
+      loadState()
+      renderDays()
+    </script>
+  </body>
+</html>
